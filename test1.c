@@ -27,7 +27,7 @@ void add_animal_to_list(AnimalsList *list, Animal new_animal){
 		if(list->size == 0){
 			list->animals = (Animal*) malloc (sizeof(Animal));
 
-			assert(list->animals == NULL);
+			assert(list->animals != NULL);
 			list->size = 1;
 
 		}
@@ -35,7 +35,7 @@ void add_animal_to_list(AnimalsList *list, Animal new_animal){
 			Animal *buff = NULL;
 			buff = (Animal*) realloc (list->animals, sizeof(Animal) * ((int)list->last_index * 2));
 
-			assert(buff == NULL);
+			assert(buff != NULL);
 			list->size *= 2;
 			list->animals = buff;
 		}	
@@ -46,7 +46,7 @@ void add_animal_to_list(AnimalsList *list, Animal new_animal){
 }
 
 void sort(AnimalsList list_to_sort, AnimalsList *dogs, AnimalsList *cats, AnimalsList *other){
-	for(int c = 0; c < list_to_sort.last_index; ++c){
+	for(size_t c = 0; c < list_to_sort.last_index; ++c){
 		if(strcmp(list_to_sort.animals[c].type, "dog") == 0){
 			add_animal_to_list(dogs, list_to_sort.animals[c]);
 		}
@@ -59,9 +59,9 @@ void sort(AnimalsList list_to_sort, AnimalsList *dogs, AnimalsList *cats, Animal
 	}
 }
 
-void show(const AnimalsList *animals_list){
+void show(AnimalsList *animals_list){
 	printf("%s:\n", animals_list->title);
-	for(int c = 0; c < animals_list->last_index; ++c){
+	for(size_t c = 0; c < animals_list->last_index; ++c){
 		printf("	%s %s %s\n", animals_list->animals[c].type, 
 			animals_list->animals[c].color, animals_list->animals[c].name);
 	}
@@ -70,10 +70,12 @@ void show(const AnimalsList *animals_list){
 
 void task(Animal *animals, size_t animals_count){
 
+	char ANIMALS[] = "ANIMALS";
 	AnimalsList list;
 	list.size = animals_count;
 	list.last_index = animals_count;
 	list.animals = animals;
+	list.title = &ANIMALS[0];
 	
 	char DOGS[] = "DOGS";
 	AnimalsList dogs;
@@ -103,14 +105,33 @@ void task(Animal *animals, size_t animals_count){
 	show(&cats);
 	show(&other);
 
-	free(list.animals);
 	free(dogs.animals);
 	free(cats.animals);
 	free(other.animals);
 }
 
 int main(){
-	task(NULL, 0);
-	//run task
-	//printf("%d %d\n", TTSSES);
+
+	char dog[] = "dog";
+	char cat[] = "cat";
+	char other[] = "other";
+
+	Animal o_1;
+	o_1.type = &dog[0];
+	o_1.color = &dog[0];
+	o_1.name = &dog[0];
+
+	Animal o_2;
+	o_2.type = &cat[0];
+	o_2.color = &cat[0];
+	o_2.name = &cat[0];
+
+	Animal o_3;
+	o_3.type = &other[0];
+	o_3.color = &other[0];
+	o_3.name = &other[0];
+
+	Animal array[] = {o_1, o_2, o_3};
+
+	task(&array[0], (size_t)3);
 }
