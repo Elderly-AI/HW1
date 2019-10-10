@@ -28,7 +28,6 @@ size_t binary_search(size_t lower_bound, size_t upper_bound, const Animal *array
 }
 
 void insert_sort(Animal *array, size_t animals_count, size_t (*cmp)(const void *a, const void *b)){
-	size_t c = 1;
 	size_t insert_index = 0;
 	Animal buff;
 
