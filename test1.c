@@ -28,11 +28,10 @@ size_t binary_search(size_t lower_bound, size_t upper_bound, const Animal *array
 }
 
 void insert_sort(Animal *array, size_t animals_count, size_t (*cmp)(const void *a, const void *b)){
-	size_t insert_index = 0;
 	Animal buff;
 
 	for(size_t c = 0; c < animals_count; ++c){
-		insert_index = binary_search(0, c, array, &array[c], cmp);
+		size_t insert_index = binary_search(0, c, array, &array[c], cmp);
 		buff = array[c];
 		memmove(array + insert_index + 1, array + insert_index, (c - insert_index) * sizeof(Animal));
 		
